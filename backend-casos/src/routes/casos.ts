@@ -2,11 +2,16 @@ import { Router } from "express";
 import { v4 as uuidv4 } from "uuid";
 import type { Caso } from "../types.js";
 import { verifyToken } from "../middleware/auth.js";
+import { CreateCasoDTO } from "../dtos/CreateCasoDTO.js";
+import { UpdateCasoDTO } from "../dtos/UpdateCasoDTO.js";
+import { validateDTO } from "../utils/validation.js";
+import { seedCasos } from "../seeds/seedCasos.js";
+import { BadRequestException, NotFoundException } from "../filters/HttpExceptionFilter.js";
 
 const router = Router();
 
 // "DB" en memoria (si quieres persistir usa fs)
-let casos: Caso[] = [];
+let casos: Caso[] = [...seedCasos];
 
 router.use(verifyToken); // proteger todas las rutas siguientes
 
@@ -14,10 +19,8 @@ router.get("/", (req, res) => {
   res.json(casos);
 });
 
-router.post("/", (req, res) => {
+router.post("/", validateDTO(CreateCasoDTO), (req, res) => {
   const { nombre, descripcion, estado, prioridad, responsable } = req.body;
-  if (!nombre || typeof nombre !== "string") return res.status(400).json({ error: "nombre es requerido" });
-  if (!prioridad || !["baja", "media", "alta"].includes(prioridad)) return res.status(400).json({ error: "prioridad es requerida (baja, media, alta)" });
 
   const nuevo: Caso = {
     id: uuidv4(),
@@ -28,14 +31,21 @@ router.post("/", (req, res) => {
     responsable: responsable && typeof responsable === "string" ? responsable : undefined
   };
   casos.push(nuevo);
-  res.json(nuevo);
+  res.status(201).json(nuevo);
 });
 
-router.put("/:id", (req, res) => {
+router.put("/:id", validateDTO(UpdateCasoDTO), (req, res) => {
   const { id } = req.params;
   const { nombre, descripcion, estado, prioridad, responsable } = req.body;
   const idx = casos.findIndex(c => c.id === id);
-  if (idx === -1 || !casos[idx]) return res.status(404).json({ error: "Caso no encontrado" });
+  
+  if (idx === -1 || !casos[idx]) {
+    return res.status(404).json({ 
+      statusCode: 404, 
+      message: "Caso no encontrado",
+      timestamp: new Date().toISOString()
+    });
+  }
 
   const casoActual = casos[idx];
   const actualizado: Caso = {
@@ -53,7 +63,15 @@ router.put("/:id", (req, res) => {
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
   const idx = casos.findIndex(c => c.id === id);
-  if (idx === -1) return res.status(404).json({ error: "Caso no encontrado" });
+  
+  if (idx === -1) {
+    return res.status(404).json({ 
+      statusCode: 404, 
+      message: "Caso no encontrado",
+      timestamp: new Date().toISOString()
+    });
+  }
+  
   const removed = casos.splice(idx, 1)[0];
   res.json({ removed });
 });

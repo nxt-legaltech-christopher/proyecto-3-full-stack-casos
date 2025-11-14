@@ -30,13 +30,22 @@ proyecto/
 │   ├── package.json
 │   ├── tsconfig.json
 │   └── src/
-│       ├── index.ts         # Punto de entrada del backend
-│       ├── types.ts         # Tipos TypeScript para los casos
+│       ├── index.ts              # Punto de entrada del backend
+│       ├── types.ts              # Tipos TypeScript para los casos
 │       ├── middleware/
-│       │   └── auth.ts      # Middleware JWT
-│       └── routes/
-│           ├── auth.ts      # Rutas de autenticación
-│           └── casos.ts     # CRUD de casos
+│       │   └── auth.ts           # Middleware JWT
+│       ├── routes/
+│       │   ├── auth.ts           # Rutas de autenticación
+│       │   └── casos.ts          # CRUD de casos
+│       ├── dtos/
+│       │   ├── CreateCasoDTO.ts  # DTO para crear casos (validado)
+│       │   └── UpdateCasoDTO.ts  # DTO para actualizar casos
+│       ├── filters/
+│       │   └── HttpExceptionFilter.ts  # Manejo global de errores
+│       ├── seeds/
+│       │   └── seedCasos.ts      # Datos de ejemplo
+│       └── utils/
+│           └── validation.ts     # Middleware de validación DTO
 └── frontend-casos/
     ├── package.json
     ├── tsconfig.json
@@ -158,10 +167,83 @@ NEXT_PUBLIC_API_URL=http://localhost:4000
 - Login con persistencia de sesión
 - Dashboard de casos
 - Crear, editar y eliminar casos
-- Modo claro/oscuro
 - UI moderna con Tailwind
 - Manejo de tokens en localStorage
 - Validación desde formulario
+
+---
+
+## ✨ Mejoras Implementadas (Professional Grade)
+
+Este proyecto incluye mejoras clave que lo hacen profesional y listo para producción:
+
+### 1. ✅ Validación Real con `class-validator`
+
+Cada DTO valida automáticamente los datos recibidos en POST/PUT:
+
+```typescript
+// CreateCasoDTO.ts
+export class CreateCasoDTO {
+  @IsString()
+  @IsNotEmpty()
+  nombre!: string;
+
+  @IsIn(['baja', 'media', 'alta'])
+  @IsNotEmpty()
+  prioridad!: 'baja' | 'media' | 'alta';
+
+  @IsString()
+  @IsOptional()
+  responsable?: string;
+}
+```
+
+**Beneficios:** Datos siempre correctos, respuestas de error claras, sin validación manual.
+
+---
+
+### 2. ✅ Manejo de Errores Global
+
+Un `HttpExceptionFilter` devuelve errores con formato limpio y consistente:
+
+```json
+{
+  "statusCode": 400,
+  "message": "Validation failed: nombre: nombre should not be empty",
+  "timestamp": "2025-11-13T10:30:00.000Z",
+  "path": "/casos"
+}
+```
+
+**Beneficios:** Arquitectura profesional, debugging fácil, respuestas predecibles.
+
+---
+
+### 3. ✅ DTOs Limpios y Tipados
+
+Separación clara entre crear y actualizar:
+
+- **CreateCasoDTO:** Campos requeridos para creación
+- **UpdateCasoDTO:** Todos los campos opcionales para actualización
+
+**Beneficios:** Control total sobre qué campos se permiten, validación específica por operación.
+
+---
+
+### 4. 📦 Seeds / Datos de Ejemplo
+
+El backend inicia con 5 casos de ejemplo para que el tester vea datos inmediatamente:
+
+```typescript
+// seedCasos.ts
+- 🔴 Error crítico en login (alta prioridad)
+- 🟡 Mejorar UI del dashboard (media)
+- 🟢 Documentar API REST (completado)
+- 🔵 Implementar búsqueda global (media)
+- ⚪ Optimizar base de datos (baja)
+```
+
+**Beneficios:** Sin necesidad de crear datos, experiencia más fluida para el tester.
 
 ---
 
@@ -199,14 +281,16 @@ Corre en: [http://localhost:3000](http://localhost:3000)
 
 ---
 
-## 📅 Roadmap
+## 📅 Roadmap Futuro
 
-- 🔜 Persistencia con PostgreSQL
-- 🔜 Roles y permisos
+- 🔜 Persistencia con PostgreSQL / MongoDB
+- 🔜 Roles y permisos avanzados
 - 🔜 Búsquedas y filtros avanzados
 - 🔜 Logs y auditoría
-- 🔜 Notificaciones
+- 🔜 Notificaciones en tiempo real (WebSockets)
 - 🔜 Despliegue con Docker
+- 🔜 Tests unitarios con Jest
+- 🔜 CI/CD con GitHub Actions
 
 ---
 
