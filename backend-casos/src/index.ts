@@ -5,7 +5,12 @@ import casosRoutes from "./routes/casos.js";
 import { HttpExceptionFilter } from "./filters/HttpExceptionFilter.js";
 
 const app = express();
-app.use(cors({ origin: "http://localhost:3000" })); // permitir frontend local
+app.use(cors({
+	origin: [
+		"http://localhost:3000",
+		"https://gestion-casos-fullstack.onrender.com"
+	]
+})); // permitir frontend local y producción
 app.use(express.json());
 
 
