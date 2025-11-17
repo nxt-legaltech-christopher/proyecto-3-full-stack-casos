@@ -18,7 +18,14 @@ Este proyecto demuestra habilidades clave para pruebas técnicas: CRUD real, aut
 ## 📸 Vista Previa
 
 
-![Preview](./preview.png)
+
+
+![Preview](./assets/preview.png)
+
+<div align="center">
+  <img src="./assets/login.png" alt="Login" width="350" style="margin:16px;display:inline-block;">
+  <img src="./assets/menu.png" alt="Menú" width="350" style="margin:16px;display:inline-block;">
+</div>
 
 ---
 
@@ -43,7 +50,7 @@ proyecto/
 │       ├── filters/
 │       │   └── HttpExceptionFilter.ts  # Manejo global de errores
 │       ├── seeds/
-│       │   └── seedCasos.ts      # Datos de ejemplo
+│       │   └── seedCasos.ts      # Datos de ejemplo (más de 10 casos)
 │       └── utils/
 │           └── validation.ts     # Middleware de validación DTO
 └── frontend-casos/
@@ -58,9 +65,14 @@ proyecto/
         │   ├── login/
         │   │   └── page.tsx
         │   └── casos/
-        │       └── page.tsx
+        │       ├── page.tsx              # Vista de lista de casos
+        │       ├── crear/page.tsx        # Vista para crear caso
+        │       └── editar/[id]/page.tsx  # Vista para editar caso
         ├── components/
-        │   └── CasoForm.tsx
+        │   ├── CasoForm.tsx
+        │   ├── ConfirmModal.tsx          # Modal de confirmación para eliminar
+        │   ├── Spinner.tsx               # Indicador de carga
+        │   └── index.ts                  # Exporta componentes
         └── lib/
             └── api.ts
 ```
@@ -165,11 +177,15 @@ NEXT_PUBLIC_API_URL=http://localhost:4000
 ### Frontend
 
 - Login con persistencia de sesión
-- Dashboard de casos
-- Crear, editar y eliminar casos
-- UI moderna con Tailwind
+- Vista de lista de casos
+- Vista separada para crear caso
+- Vista separada para editar caso
+- Modal de confirmación para eliminar
+- UI moderna y responsiva con Tailwind
+- Indicadores de carga (spinner)
+- Mensajes de error y validación en formularios
+- Botón de logout siempre visible
 - Manejo de tokens en localStorage
-- Validación desde formulario
 
 ---
 
@@ -230,9 +246,22 @@ Separación clara entre crear y actualizar:
 
 ---
 
-### 4. 📦 Seeds / Datos de Ejemplo
+### 5. 🖥️ Mejoras UX y Flujo Moderno
 
-El backend inicia con 5 casos de ejemplo para que el tester vea datos inmediatamente:
+- Vistas separadas para listar, crear y editar casos
+- Modal de confirmación para eliminar casos
+- Indicadores de carga (spinner) y feedback visual
+- Validación y mensajes de error en formularios
+- Botón de logout visible y accesible
+- Diseño responsivo y moderno
+
+**Beneficios:** Experiencia de usuario profesional, intuitiva y lista para producción.
+
+---
+
+### 6. 📦 Seeds / Datos de Ejemplo
+
+El backend inicia con más de 10 casos de ejemplo variados, incluyendo distintos estados, prioridades y responsables, para que el tester vea datos reales y diversos inmediatamente:
 
 ```typescript
 // seedCasos.ts
@@ -241,9 +270,16 @@ El backend inicia con 5 casos de ejemplo para que el tester vea datos inmediatam
 - 🟢 Documentar API REST (completado)
 - 🔵 Implementar búsqueda global (media)
 - ⚪ Optimizar base de datos (baja)
+- 🟠 Integrar notificaciones push (alta)
+- 🟣 Revisar seguridad de endpoints (alta)
+- 🟤 Migrar a nueva versión de Node.js (media)
+- Y más casos con distintos estados y prioridades...
 ```
 
-**Beneficios:** Sin necesidad de crear datos, experiencia más fluida para el tester.
+**Beneficios:** Sin necesidad de crear datos, experiencia más fluida y realista para el tester.
+```
+
+**Beneficios:** Sin necesidad de crear datos, experiencia más fluida y realista para el tester.
 
 ---
 
