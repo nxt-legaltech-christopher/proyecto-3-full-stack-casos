@@ -8,8 +8,9 @@ Este proyecto demuestra habilidades clave para pruebas técnicas: CRUD real, aut
 
 ## 🌐 Demo en Vivo
 
-- **Frontend:** [https://casos-demo.vercel.app](https://casos-demo.vercel.app)
-- **Backend:** [https://casos-api.onrender.com](https://casos-api.onrender.com)
+
+- **Frontend:** [https://gestion-casos-fullstack.onrender.com/](https://gestion-casos-fullstack.onrender.com/)
+- **Backend:** [https://gestion-casos-fullstack-backend.onrender.com/](https://gestion-casos-fullstack-backend.onrender.com/)
 
 > **Nota:** El backend en Render usa almacenamiento en memoria. Los datos se reinician cuando el servidor se duerme o reinicia.
 
@@ -20,7 +21,6 @@ Este proyecto demuestra habilidades clave para pruebas técnicas: CRUD real, aut
 
 
 
-![Preview](./assets/preview.png)
 
 <div align="center">
   <img src="./assets/login.png" alt="Login" width="350" style="margin:16px;display:inline-block;">
@@ -79,22 +79,6 @@ proyecto/
 
 ---
 
-## 🎯 ¿Por qué este proyecto es relevante para pruebas técnicas?
-
-Este proyecto demuestra:
-
-- ✔️ Autenticación real con JWT
-- ✔️ CRUD completo y protegido
-- ✔️ Uso de Next.js App Router
-- ✔️ Arquitectura limpia y escalable
-- ✔️ Separación clara frontend/backend
-- ✔️ Validación y tipado estricto con TypeScript
-- ✔️ UI moderna con Tailwind CSS
-- ✔️ Buenas prácticas de APIs REST
-
-Es ideal para mostrar dominio práctico en un flujo real de trabajo.
-
----
 
 ## 🛠️ Tecnologías Utilizadas
 
@@ -189,7 +173,7 @@ NEXT_PUBLIC_API_URL=http://localhost:4000
 
 ---
 
-## ✨ Mejoras Implementadas (Professional Grade)
+## Mejoras Implementadas
 
 Este proyecto incluye mejoras clave que lo hacen profesional y listo para producción:
 
